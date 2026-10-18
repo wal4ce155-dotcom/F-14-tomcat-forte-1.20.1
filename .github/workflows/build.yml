@@ -1,0 +1,24 @@
+name: Build mod
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: unzip F14Tomcat-Forge-1.20.1.zip
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.1.1
+      - name: Build
+        working-directory: F14Tomcat
+        run: gradle build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: f14tomcat-jar
+          path: F14Tomcat/build/libs/*.jar
