@@ -8,6 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: unzip F14Tomcat-Forge-1.20.1.zip
+      - name: Corrigir onGround
+        run: |
+          sed -i -E 's/this\.onGround([^(A-Za-z_]|$)/this.onGround()\1/g' F14Tomcat/src/main/java/com/example/f14tomcat/entity/F14Entity.java
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
